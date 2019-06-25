@@ -32,7 +32,7 @@ namespace mantis_tests
             Ftp = new FtpHelper(this);
             James = new JamesHelper(this);
             Mail = new MailHelper(this);
-
+            Project = new ProjectHelper(this);
 
         }
 
@@ -77,5 +77,6 @@ namespace mantis_tests
         public FtpHelper Ftp { get;  set; }
         public JamesHelper James { get; set; }
         public MailHelper Mail { get; set; }
+        public ProjectHelper Project { get; set; }
     }
 }
