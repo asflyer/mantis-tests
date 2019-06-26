@@ -44,8 +44,8 @@ namespace mantis_tests
 
             ProjectData project = new ProjectData
             {
-                Name = "807",
-                Description = "097"
+                Name = "803217",
+                Description = "093127"
             };
 
             app.Project.AddMantisProject(project);

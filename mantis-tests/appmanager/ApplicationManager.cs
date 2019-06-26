@@ -41,7 +41,7 @@ namespace mantis_tests
         {
             try
             {
-                driver.Quit();//Остановка браузера
+                Driver.Quit();//Остановка браузера
             }
             catch (Exception)
             {
