@@ -8,6 +8,9 @@ using OpenQA.Selenium;
 using System.IO;
 using System.Threading;
 using NUnit.Framework;
+using OpenQA.Selenium.Support;
+using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Support.UI;
 
 
 namespace mantis_tests
@@ -49,7 +52,47 @@ namespace mantis_tests
             driver.FindElement(By.XPath("/html/body/table[2]/tbody/tr/td[1]/a[7]")).Click(); //Клик по кнопке Manage
 
         }
-        
+
+        /*
+        public List<ProjectData> GetProjectList()
+        {
+            OpenManagePage();//Открываем страницу управления
+            OpenManageProgectPage(); //Открыли страницу проектов
+
+            ICollection<IWebElement> elements = driver.FindElements(By.)
+           
+
+
+           IList<IWebElement> projects = driver.FindElement(By.CssSelector("html body table.width100 tbody")).FindElements(By.CssSelector(".row-1")).ToList();
+
+            //List<ProjectData> projects = new List<ProjectData>();
+            return projects;
+        }
+        */
+
+        public List<ProjectData> GetProjectList()
+        {
+            OpenManagePage();//Открываем страницу управления
+            OpenManageProgectPage(); //Открыли страницу проектов
+
+            //ICollection<IWebElement> elements = driver.FindElements(By.)
+            List<ProjectData> projects = new List<ProjectData>();
+
+            ICollection<IWebElement> elements = driver.FindElement(By.XPath("/html/body/table[3]/tbody"))
+                .FindElements(By.XPath(".//tr[@class='row-1' or @class='row-2']"));
+
+            foreach (IWebElement element in elements)
+            {
+                ProjectData project = new ProjectData(element.FindElement(By.XPath(".//td[1]")).Text, element.FindElement(By.XPath(".//td[5]")).Text);
+                projects.Add(project);
+            }
+
+
+             return new List<ProjectData>(projects);
+        }
+        //(".//*['row-1']"));
+        //By.xpath(".//*[text()='Первая ссылка']/..")
+        //input[@id='username']
         /*
         public void ChechProjectCreation()
         {
@@ -57,5 +100,28 @@ namespace mantis_tests
         }
         */
 
+        //ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("[ name = 'entry' ]")); //ищем элемент с аттрибутом name = entry (привет CSS селекторы)
+        //
+        //      foreach (IWebElement element in elements) //Для каждого элемента в коллекции
+        //    {
+        //      // так раньше работало
+        //    ContactData contact = new ContactData(element.FindElement(By.XPath(".//td[3]")).Text,/* "" ,*/ element.FindElement(By.XPath(".//td[2]")).Text);
+        //
+        //
+        //contact.ContactID = element.FindElement(By.TagName("input")).GetAttribute("value");
+        //contactCash.Add(contact);
+
+
+        //    }
+
+
+        //  return new List<ContactData>(contactCash);
+
+
+
+
+
+
     }
 }
+

@@ -13,11 +13,11 @@ namespace mantis_tests
 
     {
 
-        
         /*
         Перед тестом запустить Xampp -> FileZilla (проверить, что создана группа (справа)
         и что SharedFolders смотрит на D:\programs\xampp\htdocs\mantisbt-1.2.17
         Запустить D:\programs\james\james-2.3.1\bin\run.bat
+        ЗАДАВАТЬ НОВЫЕ ДАННЫЕ!!!!
         */
         [SetUp] //Тут нужно выполнить логин как Администратор
 
@@ -39,18 +39,27 @@ namespace mantis_tests
         [Test]
         public void MantisProjectAdding()
         {
+            List<ProjectData> oldprojects = new List<ProjectData>();
+            oldprojects = app.Project.GetProjectList();
+
             ProjectData project = new ProjectData
             {
-                Name = "31",
-                Description = "33"
+                Name = "807",
+                Description = "097"
             };
 
             app.Project.AddMantisProject(project);
-            
+            oldprojects.Add(project);
+            List<ProjectData> newprojects = app.Project.GetProjectList();
             //app.Project.ChechProjectCreation();//Проверили, что такой создался
+            oldprojects.Sort();
+            newprojects.Sort();
+            Assert.AreEqual(oldprojects, newprojects);
+
 
 
         }
+
 
 
 
