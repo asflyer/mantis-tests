@@ -53,22 +53,17 @@ namespace mantis_tests
 
         }
 
-        /*
-        public List<ProjectData> GetProjectList()
+        public void RemoveMantisProject(int N)
         {
             OpenManagePage();//Открываем страницу управления
             OpenManageProgectPage(); //Открыли страницу проектов
-
-            ICollection<IWebElement> elements = driver.FindElements(By.)
-           
-
-
-           IList<IWebElement> projects = driver.FindElement(By.CssSelector("html body table.width100 tbody")).FindElements(By.CssSelector(".row-1")).ToList();
-
-            //List<ProjectData> projects = new List<ProjectData>();
-            return projects;
+            driver.FindElement(By.XPath("/html/body/table[3]/tbody/tr[" + (N+3) + "]/td[1]/a")).Click(); //тыкнули на выбранный проект
+            driver.FindElement(By.XPath("//input[@value='Delete Project']")).Click();
+            manager.Registration.SubmitOneButtonForm();
+            
         }
-        */
+
+        
 
         public List<ProjectData> GetProjectList()
         {
@@ -87,39 +82,8 @@ namespace mantis_tests
                 projects.Add(project);
             }
 
-
              return new List<ProjectData>(projects);
         }
-        //(".//*['row-1']"));
-        //By.xpath(".//*[text()='Первая ссылка']/..")
-        //input[@id='username']
-        /*
-        public void ChechProjectCreation()
-        {
-            throw new NotImplementedException();
-        }
-        */
-
-        //ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("[ name = 'entry' ]")); //ищем элемент с аттрибутом name = entry (привет CSS селекторы)
-        //
-        //      foreach (IWebElement element in elements) //Для каждого элемента в коллекции
-        //    {
-        //      // так раньше работало
-        //    ContactData contact = new ContactData(element.FindElement(By.XPath(".//td[3]")).Text,/* "" ,*/ element.FindElement(By.XPath(".//td[2]")).Text);
-        //
-        //
-        //contact.ContactID = element.FindElement(By.TagName("input")).GetAttribute("value");
-        //contactCash.Add(contact);
-
-
-        //    }
-
-
-        //  return new List<ContactData>(contactCash);
-
-
-
-
 
 
     }

@@ -44,19 +44,38 @@ namespace mantis_tests
 
             ProjectData project = new ProjectData
             {
-                Name = "803217",
-                Description = "093127"
+                Name = "112",
+                Description = "112"
             };
 
             app.Project.AddMantisProject(project);
+
             oldprojects.Add(project);
             List<ProjectData> newprojects = app.Project.GetProjectList();
-            //app.Project.ChechProjectCreation();//Проверили, что такой создался
+
             oldprojects.Sort();
             newprojects.Sort();
             Assert.AreEqual(oldprojects, newprojects);
 
+        }
 
+        [Test]
+        public void MantisProjectRemoving()
+        {
+            int N = 2;//ВВОДИМ САМИ Порядковый номер удаляемого контакта начиная с НУУУУУЛЯЯЯ!!!
+            List<ProjectData> oldprojects = new List<ProjectData>();
+            oldprojects = app.Project.GetProjectList(); 
+
+            ProjectData removedProject = oldprojects[N]; //Он находится не так, как элемент в списке
+
+            app.Project.RemoveMantisProject(N);
+
+            oldprojects.Remove(removedProject);
+            List<ProjectData> newprojects = app.Project.GetProjectList();
+            
+            oldprojects.Sort();
+            newprojects.Sort();
+            Assert.AreEqual(oldprojects, newprojects);
 
         }
 
