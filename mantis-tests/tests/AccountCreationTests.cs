@@ -33,18 +33,34 @@ namespace mantis_tests
         [Test]
         public void TestAccountRegistration()
         {
+            
             AccountData account = new AccountData()
             {
-                Name = "testuser3",
+                Name = "testuser5",
                 Password = "password",
-                Email = "testuser3@localhost.localdomain"
+                Email = "testuser5@localhost.localdomain"
             };
+
+            List<AccountData> accounts = app.Admin.GetAllAccount();
+            AccountData existingAccount = accounts.Find(x => x.Name == account.Name);
+            //лямбда выражение, которое вернёт тру или фолз в зависимости от того, подходит элемент под нужные условия или не подходит
+            //ищем предикат, у которого Name = 
+
+            if(existingAccount != null)
+            {
+                app.Admin.DeleteAccount(existingAccount);
+            }
+
+
+            //часть ниже остается в качестве домашнего задания
+            
 
             app.James.Delete(account);
             app.James.Add(account);
 
             app.Registration.Register(account);
             
+            //
          }
 
         [TearDown]

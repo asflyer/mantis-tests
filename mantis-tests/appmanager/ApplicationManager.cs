@@ -26,14 +26,15 @@ namespace mantis_tests
         private ApplicationManager()
         {
             driver = new FirefoxDriver();
-            baseURL = "http://localhost/addressbook/";
+            baseURL = "http://localhost/mantisbt-1.2.17";
+      
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromMilliseconds(100);//   //Костыль - чтобы не падало при массовом запуске
             Registration = new RegistrationHelper(this);
             Ftp = new FtpHelper(this);
             James = new JamesHelper(this);
             Mail = new MailHelper(this);
             Project = new ProjectHelper(this);
-
+            Admin = new AdminHelper(this, baseURL);
         }
 
 
@@ -54,7 +55,7 @@ namespace mantis_tests
             if (! app.IsValueCreated) //Если для текущего потока внутри этого хранилища ничего не создано, то создаем
             {
                 ApplicationManager newInstance = new ApplicationManager();
-                newInstance.driver.Url = "http://localhost/mantisbt-1.2.17/login_page.php";
+                newInstance.driver.Url = newInstance.baseURL + "/login_page.php";
                 
                 app.Value = newInstance;
                 
@@ -78,5 +79,6 @@ namespace mantis_tests
         public JamesHelper James { get; set; }
         public MailHelper Mail { get; set; }
         public ProjectHelper Project { get; set; }
+        public AdminHelper Admin { get; set;  }
     }
 }
