@@ -55,8 +55,8 @@ namespace mantis_tests
             if (! app.IsValueCreated) //Если для текущего потока внутри этого хранилища ничего не создано, то создаем
             {
                 ApplicationManager newInstance = new ApplicationManager();
-                newInstance.driver.Url = newInstance.baseURL + "/login_page.php";
-                
+                newInstance.driver.Url = "http://localhost/mantisbt-1.2.17/login_page.php";
+                //newInstance.driver.Url = newInstance.baseURL + "/login_page.php";
                 app.Value = newInstance;
                 
             }

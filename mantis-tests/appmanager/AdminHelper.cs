@@ -11,11 +11,11 @@ namespace mantis_tests
 {
     public class AdminHelper : HelperBase
     {
-        private string baseURL;
+        private string baseUrl;
 
-        public AdminHelper(ApplicationManager manager, string baseURL) : base(manager)
+        public AdminHelper(ApplicationManager manager, string baseUrl) : base(manager)
         {
-            this.baseURL = baseURL;
+            this.baseUrl = baseUrl;
         }
 
         public List<AccountData> GetAllAccount()
@@ -24,13 +24,15 @@ namespace mantis_tests
 
 
             IWebDriver driver = OpenAppAndLogin();
-            driver.Url = baseURL + "/manage_user_page.php";
+            //driver.Url = baseUrl + "/manage_user_page.php";
+            driver.Url = "http://localhost/mantisbt-1.2.17/manage_user_page.php";
             IList<IWebElement> rows = driver.FindElements(By.CssSelector("table tr.row-1, table tr.row-2"));
             foreach (IWebElement row in rows)
             {
                 IWebElement link = row.FindElement(By.TagName("a"));
+                //string link = row.FindElement(By.XPath(".//td[1]")).Text;
+
                 
-                               
                 string name = link.Text;
                 string href = link.GetAttribute("href");
                 Match m = Regex.Match(href, @"\d+$");
@@ -50,7 +52,8 @@ namespace mantis_tests
         public void DeleteAccount (AccountData account)
         {
             IWebDriver driver = OpenAppAndLogin();
-            driver.Url = baseURL + "/manage_user_edit_page.php?user_id=" + account.ID;
+            //driver.Url = baseUrl + "/manage_user_edit_page.php?user_id=" + account.ID;
+            driver.Url = "http://localhost/mantisbt-1.2.17/manage_user_edit_page.php?user_id=" + account.ID;
             driver.FindElement(By.CssSelector("input[value='Delete User']")).Click();
             driver.FindElement(By.CssSelector("input[value='Delete Account']")).Click();
 
@@ -59,11 +62,11 @@ namespace mantis_tests
         private IWebDriver OpenAppAndLogin()
         {
             IWebDriver driver = new SimpleBrowserDriver();
-            driver.Url = baseURL + "/login_page.php";
+            driver.Url = "http://localhost/mantisbt-1.2.17/login_page.php";
+            //driver.Url = baseUrl + "/login_page.php";
             driver.FindElement(By.Name("username")).SendKeys("administrator");
             driver.FindElement(By.Name("password")).SendKeys("root");
-            SubmitOneButtonForm();
-
+            driver.FindElement(By.CssSelector("input.button")).Click();
             return driver;
 
         }
