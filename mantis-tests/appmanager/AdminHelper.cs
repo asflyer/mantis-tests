@@ -24,8 +24,8 @@ namespace mantis_tests
 
 
             IWebDriver driver = OpenAppAndLogin();
-            //driver.Url = baseUrl + "/manage_user_page.php";
-            driver.Url = "http://localhost/mantisbt-1.2.17/manage_user_page.php";
+            driver.Url = baseUrl + "/manage_user_page.php";
+            
             IList<IWebElement> rows = driver.FindElements(By.CssSelector("table tr.row-1, table tr.row-2"));
             foreach (IWebElement row in rows)
             {
@@ -52,8 +52,8 @@ namespace mantis_tests
         public void DeleteAccount (AccountData account)
         {
             IWebDriver driver = OpenAppAndLogin();
-            //driver.Url = baseUrl + "/manage_user_edit_page.php?user_id=" + account.ID;
-            driver.Url = "http://localhost/mantisbt-1.2.17/manage_user_edit_page.php?user_id=" + account.ID;
+            driver.Url = baseUrl + "/manage_user_edit_page.php?user_id=" + account.ID;
+            
             driver.FindElement(By.CssSelector("input[value='Delete User']")).Click();
             driver.FindElement(By.CssSelector("input[value='Delete Account']")).Click();
 
@@ -62,8 +62,8 @@ namespace mantis_tests
         private IWebDriver OpenAppAndLogin()
         {
             IWebDriver driver = new SimpleBrowserDriver();
-            driver.Url = "http://localhost/mantisbt-1.2.17/login_page.php";
-            //driver.Url = baseUrl + "/login_page.php";
+            
+            driver.Url = baseUrl + "/login_page.php";
             driver.FindElement(By.Name("username")).SendKeys("administrator");
             driver.FindElement(By.Name("password")).SendKeys("root");
             driver.FindElement(By.CssSelector("input.button")).Click();
