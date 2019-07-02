@@ -39,8 +39,15 @@ namespace mantis_tests
         [Test]
         public void MantisProjectAdding()
         {
-            List<ProjectData> oldprojects = new List<ProjectData>();
-            oldprojects = app.Project.GetProjectList();
+            AccountData admin = new AccountData
+            {
+                Name = "administrator",
+                Password = "root"
+            };
+            //List<ProjectData> oldprojects = new List<ProjectData>();//Получение списка через интерфейс
+            //oldprojects = app.Project.GetProjectList();
+            List<ProjectData> oldprojects2 = new List<ProjectData>(); //Получение списка через API
+            oldprojects2 = app.API.APIGetProjectList(admin);
 
             ProjectData project = new ProjectData
             {
@@ -50,28 +57,51 @@ namespace mantis_tests
 
             app.Project.AddMantisProject(project);
 
-            oldprojects.Add(project);
-            List<ProjectData> newprojects = app.Project.GetProjectList();
-
-            oldprojects.Sort();
+            oldprojects2.Add(project);
+            
+            List<ProjectData> newprojects = app.API.APIGetProjectList(admin);
+            oldprojects2.Sort();
             newprojects.Sort();
-            Assert.AreEqual(oldprojects, newprojects);
+            Assert.AreEqual(oldprojects2, newprojects);
 
         }
 
         [Test]
         public void MantisProjectRemoving()
         {
-            int N = 2;//ВВОДИМ САМИ Порядковый номер удаляемого контакта начиная с НУУУУУЛЯЯЯ!!!
-            List<ProjectData> oldprojects = new List<ProjectData>();
-            oldprojects = app.Project.GetProjectList(); 
+            AccountData admin = new AccountData
+            {
+                Name = "administrator",
+                Password = "root"
+            };
+            int N = 3;//ВВОДИМ САМИ Порядковый номер удаляемого контакта начиная с НУУУУУЛЯЯЯ!!!
 
-            ProjectData removedProject = oldprojects[N]; //Он находится не так, как элемент в списке
+            List<ProjectData> oldprojects = new List<ProjectData>();
+            
+            oldprojects = app.API.APIGetProjectList(admin);
+            if (oldprojects.Count == 0)
+            {
+                ProjectData project = new ProjectData
+                {
+                    Name = "555",
+                    Description = "555"
+                };
+
+                app.API.APIAddMantisProject(admin, project);
+                oldprojects = app.API.APIGetProjectList(admin);
+                N = 0;
+            }
+            else if(oldprojects.Count < N)
+            {
+                N = oldprojects.Count - 1;
+            }
+
+            ProjectData removedProject = oldprojects[N]; 
 
             app.Project.RemoveMantisProject(N);
 
             oldprojects.Remove(removedProject);
-            List<ProjectData> newprojects = app.Project.GetProjectList();
+            List<ProjectData> newprojects = app.API.APIGetProjectList(admin);
             
             oldprojects.Sort();
             newprojects.Sort();

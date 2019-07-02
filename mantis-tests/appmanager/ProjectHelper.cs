@@ -76,6 +76,7 @@ namespace mantis_tests
             ICollection<IWebElement> elements = driver.FindElement(By.XPath("/html/body/table[3]/tbody"))
                 .FindElements(By.XPath(".//tr[@class='row-1' or @class='row-2']"));
 
+
             foreach (IWebElement element in elements)
             {
                 ProjectData project = new ProjectData(element.FindElement(By.XPath(".//td[1]")).Text, element.FindElement(By.XPath(".//td[5]")).Text);

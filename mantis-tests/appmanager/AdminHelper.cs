@@ -30,9 +30,7 @@ namespace mantis_tests
             foreach (IWebElement row in rows)
             {
                 IWebElement link = row.FindElement(By.TagName("a"));
-                //string link = row.FindElement(By.XPath(".//td[1]")).Text;
-
-                
+                                
                 string name = link.Text;
                 string href = link.GetAttribute("href");
                 Match m = Regex.Match(href, @"\d+$");
