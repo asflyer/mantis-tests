@@ -69,16 +69,16 @@ namespace mantis_tests
         [Test]
         public void MantisProjectRemoving()
         {
-            AccountData admin = new AccountData
+            /*AccountData admin = new AccountData
             {
                 Name = "administrator",
                 Password = "root"
-            };
+            }; */
             int N = 3;//ВВОДИМ САМИ Порядковый номер удаляемого контакта начиная с НУУУУУЛЯЯЯ!!!
 
             List<ProjectData> oldprojects = new List<ProjectData>();
-            
-            oldprojects = app.API.APIGetProjectList(admin);
+            oldprojects = app.Project.GetProjectList();
+            //oldprojects = app.API.APIGetProjectList(admin);
             if (oldprojects.Count == 0)
             {
                 ProjectData project = new ProjectData
@@ -87,8 +87,10 @@ namespace mantis_tests
                     Description = "555"
                 };
 
-                app.API.APIAddMantisProject(admin, project);
-                oldprojects = app.API.APIGetProjectList(admin);
+                //app.API.APIAddMantisProject(admin, project);
+                app.Project.AddMantisProject(project);
+                oldprojects = app.Project.GetProjectList();
+                //oldprojects = app.API.APIGetProjectList(admin);
                 N = 0;
             }
             else if(oldprojects.Count < N)
@@ -101,8 +103,8 @@ namespace mantis_tests
             app.Project.RemoveMantisProject(N);
 
             oldprojects.Remove(removedProject);
-            List<ProjectData> newprojects = app.API.APIGetProjectList(admin);
-            
+            //List<ProjectData> newprojects = app.API.APIGetProjectList(admin);
+            List<ProjectData> newprojects = app.Project.GetProjectList();
             oldprojects.Sort();
             newprojects.Sort();
             Assert.AreEqual(oldprojects, newprojects);
